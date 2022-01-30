@@ -2,13 +2,19 @@ package com.desuzed.testusersapp
 
 import android.app.Application
 import com.desuzed.testusersapp.data.repo.LocalDataSourceImpl
+import com.desuzed.testusersapp.data.repo.RemoteDataSourceImpl
 import com.desuzed.testusersapp.data.repo.RepoApp
 import com.desuzed.testusersapp.data.repo.RepoAppImpl
 import com.desuzed.testusersapp.data.room.RoomDbApp
 
 class App : Application() {
     private val roomDbApp by lazy { RoomDbApp.getDatabase(this) }
-    private val repositoryApp by lazy { RepoAppImpl(LocalDataSourceImpl(roomDbApp.userDao())) }
+    private val repositoryApp by lazy {
+        RepoAppImpl(
+            LocalDataSourceImpl(roomDbApp.userDao()),
+            RemoteDataSourceImpl()
+        )
+    }
 
     fun getRepo(): RepoApp = repositoryApp
     override fun onCreate() {
