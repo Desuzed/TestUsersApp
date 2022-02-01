@@ -1,8 +1,7 @@
 package com.desuzed.testusersapp.data.retrofit.dto
 
 import com.desuzed.testusersapp.EntityMapper
-import com.desuzed.testusersapp.User
-import com.desuzed.testusersapp.data.room.UserDTO
+import com.desuzed.testusersapp.data.room.UserDto
 import com.google.gson.annotations.SerializedName
 
 class UserRetrofitDto (
@@ -18,9 +17,9 @@ class UserRetrofitDto (
     var avatar: String = ""
 )
 
-class UserRetrofitToRoomMapper : EntityMapper<UserRetrofitDto, UserDTO> {
-    override fun mapFromEntity(entity: UserRetrofitDto): UserDTO {
-        return UserDTO(
+class UserRetrofitToRoomMapper : EntityMapper<UserRetrofitDto, UserDto> {
+    override fun mapFromEntity(entity: UserRetrofitDto): UserDto {
+        return UserDto(
             entity.id,
             entity.firstName,
             entity.lastName,

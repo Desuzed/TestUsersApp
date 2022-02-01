@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestUsersApp</string>
+    <string name="Refresh">refresh_item</string>
 </resources>

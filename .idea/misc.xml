@@ -6,7 +6,9 @@
         <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/layout/fragment_detailed_info.xml" value="0.176" />
         <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/layout/fragment_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/layout/fragment_users.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/layout/user_recycler_view_item.xml" value="0.4" />
+        <entry key="..\:/Projects/AndroidProjects/TestUsersApp/app/src/main/res/menu/menu_toolbar.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

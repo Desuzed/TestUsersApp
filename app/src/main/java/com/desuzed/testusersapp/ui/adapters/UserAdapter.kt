@@ -47,6 +47,10 @@ class UserAdapter(
             itemView.setOnClickListener {
                 onItemClickListener.onClick(current)
             }
+            itemView.setOnLongClickListener{
+                onItemClickListener.onLongClick(current)
+                return@setOnLongClickListener true
+            }
         }
 
         companion object {
@@ -83,4 +87,5 @@ class UserAdapter(
 
 interface OnItemClickListener {
     fun onClick(user: User)
+    fun onLongClick (user : User)
 }

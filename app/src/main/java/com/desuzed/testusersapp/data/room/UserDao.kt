@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user_table")
-    fun getAllCachedUsers(): Flow<List<UserDTO>>
+    fun getAllCachedUsers(): Flow<List<UserDto>>
 
     @Delete
-    suspend fun deleteUser(user: UserDTO)
+    suspend fun deleteUser(user: UserDto)
 
     @Query("DELETE FROM user_table")
     suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertUsers(users: List<UserDTO>)
+    suspend fun insertUsers(users: List<UserDto>)
 }

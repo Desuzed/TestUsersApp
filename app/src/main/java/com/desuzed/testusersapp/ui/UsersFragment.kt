@@ -1,9 +1,8 @@
 package com.desuzed.testusersapp.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,10 +36,11 @@ class UsersFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         val recyclerView = binding.usersRecyclerView
         recyclerView.adapter = userAdapter
         collect()
-        usersViewModel.fetchUsers()
     }
 
     private fun collect() {
@@ -54,6 +54,27 @@ class UsersFragment : Fragment(), OnItemClickListener {
     override fun onClick(user: User) {
         val bundle = bundleOf(DetailedInfoFragment.USER_KEY to user)
         navigate(R.id.action_usersFragment_to_detailedInfoFragment, bundle)
+    }
+
+    override fun onLongClick(user: User) {
+        usersViewModel.deleteUser(user)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.refreshMenuItem -> {
+                usersViewModel.fetchUsers()
+                Log.i("TAG", "onOptionsItemSelected: ")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
 }
