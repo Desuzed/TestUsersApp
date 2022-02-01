@@ -1,26 +1,34 @@
 package com.desuzed.testusersapp.data.repo
 
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponse
-import com.desuzed.testusersapp.data.retrofit.dto.ErrorRetrofitDto
-import com.desuzed.testusersapp.data.retrofit.dto.UserRetrofitDto
+import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.Error
+import com.desuzed.testusersapp.data.retrofit.dto.UserRetrofitToRoomMapper
 import com.desuzed.testusersapp.data.room.UserDTO
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class RepoAppImpl(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : RepoApp {
-    override suspend fun getUsersFromApi(): Pair<List<UserRetrofitDto>?, ErrorRetrofitDto?> =
+    override suspend fun getUsersFromApi(): Error? =
         withContext(Dispatchers.IO) {
-            when (val response = remoteDataSource.fetchUsers()){
+            when (val response = remoteDataSource.fetchUsers()) {
                 is NetworkResponse.Success -> {
-                    Pair(response.body.users, null)
+                    //todo refactoring
+                    val roomUsers = arrayListOf<UserDTO>()
+                    response.body.users.forEach {
+                        roomUsers.add(UserRetrofitToRoomMapper().mapFromEntity(it))
+                    }
+                    insertUsers(roomUsers)
+                    null
                 }
                 //TODO Доделать обработку ошибок
-                is NetworkResponse.ApiError -> Pair(null, null)
-                is NetworkResponse.NetworkError -> Pair(null, null)
-                is NetworkResponse.UnknownError -> Pair(null, null)
+                is NetworkResponse.ApiError ->  null
+                is NetworkResponse.NetworkError ->  null
+                is NetworkResponse.UnknownError -> null
             }
         }
 
@@ -36,14 +44,12 @@ class RepoAppImpl(
         localDataSource.deleteUser(userDTO)
     }
 
-    override suspend fun getCachedUsers(): List<UserDTO> {
-        val list = ArrayList<UserDTO>()
-        list.add(UserDTO(1, "FirstName", "Sec name", "email", "uri"))
-        return list
+    override suspend fun getCachedUsers(): Flow<List<User>> {
+        return localDataSource.getCachedUsers()
     }
 
 }
 
 interface RepoApp : LocalDataSource {
-    suspend fun getUsersFromApi(): Pair<List<UserRetrofitDto>?, ErrorRetrofitDto?>
+    suspend fun getUsersFromApi(): Error?
 }

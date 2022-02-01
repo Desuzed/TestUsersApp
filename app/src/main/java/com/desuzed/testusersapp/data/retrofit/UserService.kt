@@ -3,7 +3,7 @@ package com.desuzed.testusersapp.data.retrofit
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponse
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponseAdapterFactory
 import com.desuzed.testusersapp.data.retrofit.dto.ErrorRetrofitDto
-import com.desuzed.testusersapp.data.retrofit.dto.Response
+import com.desuzed.testusersapp.data.retrofit.dto.ResponseDto
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +14,7 @@ interface UserService {
     @GET("users?")
     suspend fun fetchResponse(
         @Query("page") query: String
-    ): NetworkResponse<Response, ErrorRetrofitDto>
+    ): NetworkResponse<ResponseDto, ErrorRetrofitDto>
 
     companion object{
         private const val baseUrl = "https://reqres.in/api/"

@@ -1,5 +1,7 @@
 package com.desuzed.testusersapp.data.retrofit.dto
 
+import com.desuzed.testusersapp.EntityMapper
+import com.desuzed.testusersapp.data.model.Error
 import com.google.gson.annotations.SerializedName
 
 class ErrorRetrofitDto {
@@ -11,4 +13,9 @@ class ErrorRetrofitDto {
 
     @SerializedName("message")
     var message: String = ""
+}
+
+class ErrorMapper : EntityMapper<ErrorRetrofitDto, Error> {
+    override fun mapFromEntity(entity: ErrorRetrofitDto): Error =
+        Error(entity.status, entity.code, entity.message)
 }
