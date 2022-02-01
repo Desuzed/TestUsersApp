@@ -27,11 +27,12 @@ class RepoAppImpl(
                     null
                 }
                 //TODO Доделать обработку ошибок
-                is NetworkResponse.ApiError ->  null
-                is NetworkResponse.NetworkError ->  null
+                is NetworkResponse.ApiError -> null
+                is NetworkResponse.NetworkError -> null
                 is NetworkResponse.UnknownError -> null
             }
         }
+
 
     override fun insertUsers(list: List<UserDto>) {
         localDataSource.insertUsers(list)
@@ -47,6 +48,10 @@ class RepoAppImpl(
 
     override suspend fun getCachedUsers(): Flow<List<User>> {
         return localDataSource.getCachedUsers()
+    }
+
+    override suspend fun getUserById(id: Int): User {
+        return localDataSource.getUserById(id)
     }
 
 }

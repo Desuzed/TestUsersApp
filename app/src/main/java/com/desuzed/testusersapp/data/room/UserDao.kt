@@ -14,6 +14,9 @@ interface UserDao {
     @Query("DELETE FROM user_table")
     suspend fun deleteAll()
 
+    @Query("SELECT * FROM user_table WHERE id=:id")
+    suspend fun getUserById(id: Int): UserDto
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUsers(users: List<UserDto>)
 }

@@ -1,7 +1,6 @@
-package com.desuzed.testusersapp.ui
+package com.desuzed.testusersapp.ui.users
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -11,8 +10,11 @@ import com.desuzed.testusersapp.App
 import com.desuzed.testusersapp.R
 import com.desuzed.testusersapp.User
 import com.desuzed.testusersapp.databinding.FragmentUsersBinding
+import com.desuzed.testusersapp.ui.ViewModelFactory
 import com.desuzed.testusersapp.ui.adapters.OnItemClickListener
 import com.desuzed.testusersapp.ui.adapters.UserAdapter
+import com.desuzed.testusersapp.ui.detail.DetailedInfoFragment
+import com.desuzed.testusersapp.ui.navigate
 
 class UsersFragment : Fragment(), OnItemClickListener {
     private lateinit var binding: FragmentUsersBinding
@@ -37,7 +39,6 @@ class UsersFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
         val recyclerView = binding.usersRecyclerView
         recyclerView.adapter = userAdapter
         collect()
@@ -52,7 +53,7 @@ class UsersFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onClick(user: User) {
-        val bundle = bundleOf(DetailedInfoFragment.USER_KEY to user)
+        val bundle = bundleOf(DetailedInfoFragment.USER_ID to user.id)
         navigate(R.id.action_usersFragment_to_detailedInfoFragment, bundle)
     }
 
@@ -62,14 +63,13 @@ class UsersFragment : Fragment(), OnItemClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_toolbar, menu)
+        inflater.inflate(R.menu.menu_users_fragment, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
+        return when (item.itemId) {
             R.id.refreshMenuItem -> {
                 usersViewModel.fetchUsers()
-                Log.i("TAG", "onOptionsItemSelected: ")
                 true
             }
             else -> super.onOptionsItemSelected(item)

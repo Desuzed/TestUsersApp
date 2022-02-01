@@ -1,4 +1,4 @@
-package com.desuzed.testusersapp.ui
+package com.desuzed.testusersapp.ui.users
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,19 +15,20 @@ class UsersViewModel(private val repo: RepoApp) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repo.getCachedUsers().collect{
+            repo.getCachedUsers().collect {
                 _usersStateFlow.value = it
             }
         }
     }
-//todo refactor
-    fun fetchUsers (){
+
+    //todo refactor
+    fun fetchUsers() {
         viewModelScope.launch {
             repo.getUsersFromApi()
         }
     }
 
-    fun deleteUser (user : User){
+    fun deleteUser(user: User) {
         repo.deleteUser(UserToUserDtoMapper().mapFromEntity(user))
     }
 

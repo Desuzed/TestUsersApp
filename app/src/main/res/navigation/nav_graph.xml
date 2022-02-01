@@ -6,7 +6,7 @@
     app:startDestination="@id/usersFragment">
     <fragment
         android:id="@+id/usersFragment"
-        android:name="com.desuzed.testusersapp.ui.UsersFragment"
+        android:name="com.desuzed.testusersapp.ui.users.UsersFragment"
         android:label="fragment_users"
         tools:layout="@layout/fragment_users" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedInfoFragment"
-        android:name="com.desuzed.testusersapp.ui.DetailedInfoFragment"
+        android:name="com.desuzed.testusersapp.ui.detail.DetailedInfoFragment"
         android:label="fragment_detailed_info"
         tools:layout="@layout/fragment_detailed_info" />
 </navigation>

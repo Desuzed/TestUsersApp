@@ -1,8 +1,8 @@
 package com.desuzed.testusersapp.data.repo
 
 import com.desuzed.testusersapp.User
-import com.desuzed.testusersapp.data.room.UserDto
 import com.desuzed.testusersapp.data.room.UserDao
+import com.desuzed.testusersapp.data.room.UserDto
 import com.desuzed.testusersapp.data.room.UserDtoToUserMapper
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +27,8 @@ class LocalDataSourceImpl(private val userDao: UserDao) : LocalDataSource {
             userDao.deleteUser(userDto)
         }
     }
-//todo проверить
+
+    //todo проверить
     override suspend fun getCachedUsers(): Flow<List<User>> = withContext(Dispatchers.IO) {
         val usersDto = userDao.getAllCachedUsers()
         val resultMap = usersDto.transform<List<UserDto>, List<User>> { list ->
@@ -39,6 +40,10 @@ class LocalDataSourceImpl(private val userDao: UserDao) : LocalDataSource {
         }
         resultMap
     }
+
+    override suspend fun getUserById(id: Int): User = withContext(Dispatchers.IO) {
+        UserDtoToUserMapper().mapFromEntity(userDao.getUserById(id))
+    }
 }
 
 interface LocalDataSource {
@@ -46,4 +51,5 @@ interface LocalDataSource {
     fun deleteAllUsers()
     fun deleteUser(userDto: UserDto)
     suspend fun getCachedUsers(): Flow<List<User>>
+    suspend fun getUserById(id: Int): User
 }
