@@ -3,8 +3,7 @@ package com.desuzed.testusersapp.data.repo
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponse
 import com.desuzed.testusersapp.User
 import com.desuzed.testusersapp.data.model.Error
-import com.desuzed.testusersapp.data.retrofit.dto.UserRetrofitToRoomMapper
-import com.desuzed.testusersapp.data.room.UserDto
+import com.desuzed.testusersapp.data.retrofit.dto.UserRetrofitDtoToUserMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -18,9 +17,9 @@ class RepoAppImpl(
             when (val response = remoteDataSource.fetchUsers()) {
                 is NetworkResponse.Success -> {
                     //todo refactoring
-                    val roomUsers = arrayListOf<UserDto>()
+                    val roomUsers = arrayListOf<User>()
                     response.body.users.forEach {
-                        roomUsers.add(UserRetrofitToRoomMapper().mapFromEntity(it))
+                        roomUsers.add(UserRetrofitDtoToUserMapper().mapFromEntity(it))
                     }
                     deleteAllUsers()
                     insertUsers(roomUsers)
@@ -34,7 +33,7 @@ class RepoAppImpl(
         }
 
 
-    override fun insertUsers(list: List<UserDto>) {
+    override fun insertUsers(list: List<User>) {
         localDataSource.insertUsers(list)
     }
 
@@ -42,7 +41,7 @@ class RepoAppImpl(
         localDataSource.deleteAllUsers()
     }
 
-    override fun deleteUser(userDto: UserDto) {
+    override fun deleteUser(userDto: User) {
         localDataSource.deleteUser(userDto)
     }
 

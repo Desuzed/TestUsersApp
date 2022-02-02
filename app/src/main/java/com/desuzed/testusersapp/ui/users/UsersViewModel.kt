@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desuzed.testusersapp.User
 import com.desuzed.testusersapp.data.repo.RepoApp
-import com.desuzed.testusersapp.data.room.UserToUserDtoMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ class UsersViewModel(private val repo: RepoApp) : ViewModel() {
     }
 
     fun deleteUser(user: User) {
-        repo.deleteUser(UserToUserDtoMapper().mapFromEntity(user))
+        repo.deleteUser(user)
     }
 
 }

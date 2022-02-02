@@ -2,7 +2,6 @@ package com.desuzed.testusersapp.data.retrofit.dto
 
 import com.desuzed.testusersapp.EntityMapper
 import com.desuzed.testusersapp.User
-import com.desuzed.testusersapp.UserRetrofitDtoToUserMapper
 import com.desuzed.testusersapp.data.model.Response
 import com.google.gson.annotations.SerializedName
 
