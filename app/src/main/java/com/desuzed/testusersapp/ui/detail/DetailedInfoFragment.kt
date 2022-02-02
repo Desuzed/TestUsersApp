@@ -10,6 +10,7 @@ import com.desuzed.testusersapp.App
 import com.desuzed.testusersapp.R
 import com.desuzed.testusersapp.databinding.FragmentDetailedInfoBinding
 import com.desuzed.testusersapp.ui.ViewModelFactory
+import com.desuzed.testusersapp.ui.edit.EditUserDialogFragment
 
 class DetailedInfoFragment : Fragment() {
     private lateinit var binding: FragmentDetailedInfoBinding
@@ -33,13 +34,12 @@ class DetailedInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         retrieveArgument()
-        collect()
     }
 
 
     private fun collect() {
-        lifecycleScope.launchWhenStarted {
-            detailInfoViewModel.currentUsersStateFlow.collect { user ->
+        lifecycleScope.launchWhenResumed {
+            detailInfoViewModel.currentUserStateFlow.collect { user ->
                 binding.firstNameDetailTextView.text = user.firstName
                 binding.secondNameDetailTextView.text = user.lastName
                 binding.emailDetailTextView.text = user.email
@@ -58,6 +58,11 @@ class DetailedInfoFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        collect()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -67,6 +72,7 @@ class DetailedInfoFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.editUserItem -> {
+                EditUserDialogFragment().show(childFragmentManager, "EditFragment")
                 true
             }
             else -> super.onOptionsItemSelected(item)

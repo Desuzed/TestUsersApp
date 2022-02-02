@@ -1,7 +1,5 @@
 package com.desuzed.testusersapp.data.model
 
-import com.desuzed.testusersapp.User
-
 class Response(
     val page: Int,
     val perPage: Int,

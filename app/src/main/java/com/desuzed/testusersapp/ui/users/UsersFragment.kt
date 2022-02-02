@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.desuzed.testusersapp.App
 import com.desuzed.testusersapp.R
-import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.databinding.FragmentUsersBinding
 import com.desuzed.testusersapp.ui.ViewModelFactory
 import com.desuzed.testusersapp.ui.adapters.OnItemClickListener

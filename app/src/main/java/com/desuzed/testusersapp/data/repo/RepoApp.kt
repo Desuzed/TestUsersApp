@@ -1,8 +1,8 @@
 package com.desuzed.testusersapp.data.repo
 
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponse
-import com.desuzed.testusersapp.User
 import com.desuzed.testusersapp.data.model.Error
+import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.data.retrofit.dto.UserRetrofitDtoToUserMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -49,8 +49,12 @@ class RepoAppImpl(
         return localDataSource.getCachedUsers()
     }
 
-    override suspend fun getUserById(id: Int): User {
+    override suspend fun getUserById(id: Int): Flow<User> {
         return localDataSource.getUserById(id)
+    }
+
+    override fun updateUser(user: User) {
+        localDataSource.updateUser(user)
     }
 
 }

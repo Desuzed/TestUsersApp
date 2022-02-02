@@ -1,6 +1,6 @@
 package com.desuzed.testusersapp.data.repo
 
-import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.data.room.UserDao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -28,19 +28,16 @@ class LocalDataSourceImpl(private val userDao: UserDao) : LocalDataSource {
     //todo проверить
     override suspend fun getCachedUsers(): Flow<List<User>> = withContext(Dispatchers.IO) {
         userDao.getAllCachedUsers()
-//        val usersDto = userDao.getAllCachedUsers()
-//        val resultMap = usersDto.transform<List<User>, List<User>> { list ->
-//            val listOfUsers = arrayListOf<User>()
-//            list.forEach { userDto ->
-//                listOfUsers.add(UserDtoToUserMapper().mapFromEntity(userDto))
-//            }
-//            emit(listOfUsers)
-//        }
-//        resultMap
     }
 
-    override suspend fun getUserById(id: Int): User = withContext(Dispatchers.IO) {
+    override suspend fun getUserById(id: Int): Flow<User> = withContext(Dispatchers.IO) {
         userDao.getUserById(id)
+    }
+
+    override fun updateUser(user: User) {
+        job = CoroutineScope(Dispatchers.IO).launch {
+            userDao.updateUser(user)
+        }
     }
 }
 
@@ -49,5 +46,6 @@ interface LocalDataSource {
     fun deleteAllUsers()
     fun deleteUser(userDto: User)
     suspend fun getCachedUsers(): Flow<List<User>>
-    suspend fun getUserById(id: Int): User
+    suspend fun getUserById(id: Int): Flow<User>
+    fun updateUser(user: User)
 }

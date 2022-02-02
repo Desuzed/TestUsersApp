@@ -2,7 +2,7 @@ package com.desuzed.testusersapp.ui.users
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.data.repo.RepoApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

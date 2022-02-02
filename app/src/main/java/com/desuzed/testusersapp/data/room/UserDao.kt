@@ -1,7 +1,7 @@
 package com.desuzed.testusersapp.data.room
 
 import androidx.room.*
-import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,8 +16,11 @@ interface UserDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM user_table WHERE id=:id")
-    suspend fun getUserById(id: Int): User
+    fun getUserById(id: Int): Flow<User>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUsers(users: List<User>)
+
+    @Update
+    fun updateUser(user: User)
 }

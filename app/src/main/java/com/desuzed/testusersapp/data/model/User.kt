@@ -1,4 +1,4 @@
-package com.desuzed.testusersapp
+package com.desuzed.testusersapp.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
  * большого количества мапперов и boilerplate кода
   **/
 @Entity(tableName = "user_table")
-class User(
+data class User(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "first_name") val firstName: String,
     @ColumnInfo(name = "last_name") val lastName: String,

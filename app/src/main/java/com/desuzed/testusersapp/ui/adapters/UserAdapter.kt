@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.desuzed.testusersapp.User
+import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.databinding.UserRecyclerViewItemBinding
 
 class UserAdapter(
@@ -47,7 +47,7 @@ class UserAdapter(
             itemView.setOnClickListener {
                 onItemClickListener.onClick(current)
             }
-            itemView.setOnLongClickListener{
+            itemView.setOnLongClickListener {
                 onItemClickListener.onLongClick(current)
                 return@setOnLongClickListener true
             }
@@ -87,5 +87,5 @@ class UserAdapter(
 
 interface OnItemClickListener {
     fun onClick(user: User)
-    fun onLongClick (user : User)
+    fun onLongClick(user: User)
 }
