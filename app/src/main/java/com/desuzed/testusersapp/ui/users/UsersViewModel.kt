@@ -12,6 +12,9 @@ class UsersViewModel(private val repo: RepoApp) : ViewModel() {
     private val _usersStateFlow = MutableStateFlow(emptyList<User>())
     val usersStateFlow: StateFlow<List<User>> = _usersStateFlow
 
+    private val _errorStateFlow = MutableStateFlow("")
+    val errorStateFlow : StateFlow<String> = _errorStateFlow
+
     init {
         viewModelScope.launch {
             repo.getCachedUsers().collect {
@@ -23,7 +26,10 @@ class UsersViewModel(private val repo: RepoApp) : ViewModel() {
     //todo refactor
     fun fetchUsers() {
         viewModelScope.launch {
-            repo.getUsersFromApi()
+            val error = repo.getUsersFromApi()
+            if (error!=null){
+                _errorStateFlow.value = error.message
+            }
         }
     }
 

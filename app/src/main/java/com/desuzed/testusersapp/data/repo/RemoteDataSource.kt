@@ -9,7 +9,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override suspend fun fetchUsers(): NetworkResponse<ResponseDto, ErrorRetrofitDto>  =
         UserService
             .getInstance()
-            .fetchResponse("2")
+            .fetchResponse("    ")
 
 }
 

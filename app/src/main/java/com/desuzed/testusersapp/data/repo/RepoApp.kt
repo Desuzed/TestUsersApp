@@ -1,5 +1,6 @@
 package com.desuzed.testusersapp.data.repo
 
+import android.util.Log
 import com.desuzed.everyweather.data.network.retrofit.NetworkResponse
 import com.desuzed.testusersapp.data.model.Error
 import com.desuzed.testusersapp.data.model.User
@@ -25,10 +26,18 @@ class RepoAppImpl(
                     insertUsers(roomUsers)
                     null
                 }
-                //TODO Доделать обработку ошибок
-                is NetworkResponse.ApiError -> null
-                is NetworkResponse.NetworkError -> null
-                is NetworkResponse.UnknownError -> null
+                is NetworkResponse.ApiError -> {
+                    Log.i("network", "getUsersFromApi: ApiError: ${response.body}")
+                    Error("Api error", response.code.toString(), parseCode(response.code))
+                }
+                is NetworkResponse.NetworkError -> {
+                    Log.i("network", "getUsersFromApi: NetworkError ${response.error.message}")
+                    Error("Network error", response.error.message.toString(), parseCode(10))
+                }
+                is NetworkResponse.UnknownError -> {
+                    Log.i("network", "getUsersFromApi: UnknownError ${response.error?.message}")
+                    Error("Unknown error", response.error?.message.toString(), parseCode(0))
+                }
             }
         }
 
@@ -55,6 +64,10 @@ class RepoAppImpl(
 
     override fun updateUser(user: User) {
         localDataSource.updateUser(user)
+    }
+
+    override fun parseCode(code: Int): String {
+        return localDataSource.parseCode(code)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.desuzed.testusersapp
 
 import android.app.Application
+import com.desuzed.testusersapp.data.ErrorProviderImpl
 import com.desuzed.testusersapp.data.repo.LocalDataSourceImpl
 import com.desuzed.testusersapp.data.repo.RemoteDataSourceImpl
 import com.desuzed.testusersapp.data.repo.RepoApp
@@ -11,7 +12,7 @@ class App : Application() {
     private val roomDbApp by lazy { RoomDbApp.getDatabase(this) }
     private val repositoryApp by lazy {
         RepoAppImpl(
-            LocalDataSourceImpl(roomDbApp.userDao()),
+            LocalDataSourceImpl(roomDbApp.userDao(), ErrorProviderImpl(resources)),
             RemoteDataSourceImpl()
         )
     }

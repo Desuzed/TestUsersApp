@@ -2,6 +2,7 @@ package com.desuzed.testusersapp.ui.users
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +49,11 @@ class UsersFragment : Fragment(), OnItemClickListener {
         lifecycleScope.launchWhenStarted {
             usersViewModel.usersStateFlow.collect {
                 userAdapter.submitList(it)
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            usersViewModel.errorStateFlow.collect{
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
     }

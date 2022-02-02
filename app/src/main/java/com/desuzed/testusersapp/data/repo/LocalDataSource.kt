@@ -1,12 +1,13 @@
 package com.desuzed.testusersapp.data.repo
 
+import com.desuzed.testusersapp.data.ErrorProvider
 import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.data.room.UserDao
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 
-class LocalDataSourceImpl(private val userDao: UserDao) : LocalDataSource {
-    private var job: Job? = null
+class LocalDataSourceImpl(private val userDao: UserDao, private val errorProvider: ErrorProvider    ) : LocalDataSource {
+    private var job: Job? = null // todo clear job
     override fun insertUsers(list: List<User>) {
         job = CoroutineScope(Dispatchers.IO).launch {
             userDao.insertUsers(list)
@@ -39,9 +40,13 @@ class LocalDataSourceImpl(private val userDao: UserDao) : LocalDataSource {
             userDao.updateUser(user)
         }
     }
+
+    override fun parseCode(code: Int): String {
+        return errorProvider.parseCode(code)
+    }
 }
 
-interface LocalDataSource {
+interface LocalDataSource : ErrorProvider {
     fun insertUsers(list: List<User>)
     fun deleteAllUsers()
     fun deleteUser(userDto: User)
