@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class UsersViewModel(private val repo: RepoApp) : ViewModel() {
+class UsersViewModel(private val repo: RepoApp) : ViewModel(), IUsersViewModel {
     private val _usersStateFlow = MutableStateFlow(emptyList<User>())
     val usersStateFlow: StateFlow<List<User>> = _usersStateFlow
 
     private val _errorStateFlow = MutableStateFlow("")
-    val errorStateFlow : StateFlow<String> = _errorStateFlow
+    val errorStateFlow: StateFlow<String> = _errorStateFlow
 
     init {
         viewModelScope.launch {
@@ -23,18 +23,26 @@ class UsersViewModel(private val repo: RepoApp) : ViewModel() {
         }
     }
 
-    //todo refactor
-    fun fetchUsers() {
+    override fun fetchUsers() {
         viewModelScope.launch {
             val error = repo.getUsersFromApi()
-            if (error!=null){
+            if (error != null) {
                 _errorStateFlow.value = error.message
             }
         }
     }
 
-    fun deleteUser(user: User) {
+    override fun deleteUser(user: User) {
         repo.deleteUser(user)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        repo.onCleared()
+    }
+}
+
+interface IUsersViewModel {
+    fun fetchUsers()
+    fun deleteUser(user: User)
 }

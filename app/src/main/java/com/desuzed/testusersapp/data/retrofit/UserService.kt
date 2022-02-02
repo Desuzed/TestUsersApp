@@ -10,17 +10,18 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+
 interface UserService {
     @GET("users?")
     suspend fun fetchResponse(
         @Query("page") query: String
     ): NetworkResponse<ResponseDto, ErrorRetrofitDto>
 
-    companion object{
+    companion object {
         private const val baseUrl = "https://reqres.in/api/"
-        private var weatherApiService : UserService? = null
-        fun getInstance() : UserService {
-            if (weatherApiService == null){
+        private var weatherApiService: UserService? = null
+        fun getInstance(): UserService {
+            if (weatherApiService == null) {
                 val interceptor = HttpLoggingInterceptor()
                 interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
                 val client = OkHttpClient.Builder()

@@ -17,13 +17,12 @@ class RepoAppImpl(
         withContext(Dispatchers.IO) {
             when (val response = remoteDataSource.fetchUsers()) {
                 is NetworkResponse.Success -> {
-                    //todo refactoring
-                    val roomUsers = arrayListOf<User>()
+                    val usersList = arrayListOf<User>()
                     response.body.users.forEach {
-                        roomUsers.add(UserRetrofitDtoToUserMapper().mapFromEntity(it))
+                        usersList.add(UserRetrofitDtoToUserMapper().mapFromEntity(it))
                     }
                     deleteAllUsers()
-                    insertUsers(roomUsers)
+                    insertUsers(usersList)
                     null
                 }
                 is NetworkResponse.ApiError -> {
@@ -64,6 +63,10 @@ class RepoAppImpl(
 
     override fun updateUser(user: User) {
         localDataSource.updateUser(user)
+    }
+
+    override fun onCleared() {
+        localDataSource.onCleared()
     }
 
     override fun parseCode(code: Int): String {

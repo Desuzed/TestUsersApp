@@ -7,7 +7,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSourceImpl(private val userDao: UserDao, private val errorProvider: ErrorProvider    ) : LocalDataSource {
-    private var job: Job? = null // todo clear job
+    private var job: Job? = null
     override fun insertUsers(list: List<User>) {
         job = CoroutineScope(Dispatchers.IO).launch {
             userDao.insertUsers(list)
@@ -26,7 +26,6 @@ class LocalDataSourceImpl(private val userDao: UserDao, private val errorProvide
         }
     }
 
-    //todo проверить
     override suspend fun getCachedUsers(): Flow<List<User>> = withContext(Dispatchers.IO) {
         userDao.getAllCachedUsers()
     }
@@ -41,6 +40,10 @@ class LocalDataSourceImpl(private val userDao: UserDao, private val errorProvide
         }
     }
 
+    override fun onCleared() {
+        job = null
+    }
+
     override fun parseCode(code: Int): String {
         return errorProvider.parseCode(code)
     }
@@ -53,4 +56,5 @@ interface LocalDataSource : ErrorProvider {
     suspend fun getCachedUsers(): Flow<List<User>>
     suspend fun getUserById(id: Int): Flow<User>
     fun updateUser(user: User)
+    fun onCleared ()
 }

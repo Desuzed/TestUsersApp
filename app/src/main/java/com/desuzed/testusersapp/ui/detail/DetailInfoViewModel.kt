@@ -1,6 +1,5 @@
 package com.desuzed.testusersapp.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.desuzed.testusersapp.data.model.User
@@ -9,12 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DetailInfoViewModel(private val repo: RepoApp) : ViewModel() {
-    //todo refactor
-    private val _currentUserStateFlow = MutableStateFlow(User(0, "", "", "", ""))
+class DetailInfoViewModel(private val repo: RepoApp) : ViewModel(), IDetailInfoViewModel {
+    private val _currentUserStateFlow = MutableStateFlow(User.emptyUser())
     val currentUserStateFlow: StateFlow<User> = _currentUserStateFlow
 
-    fun updateCurrentUserStateFlow(id: Int) {
+    override fun updateCurrentUserStateFlow(id: Int) {
         viewModelScope.launch {
             repo.getUserById(id).collect {
                 _currentUserStateFlow.value = it
@@ -22,10 +20,17 @@ class DetailInfoViewModel(private val repo: RepoApp) : ViewModel() {
         }
     }
 
-    fun updateUser(user: User) {
+    override fun updateUser(user: User) {
         repo.updateUser(user)
-        Log.i("TAG", "updateUser: ${currentUserStateFlow.value} \n ${_currentUserStateFlow.value}")
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        repo.onCleared()
+    }
+}
 
+interface IDetailInfoViewModel {
+    fun updateCurrentUserStateFlow(id: Int)
+    fun updateUser(user: User)
 }

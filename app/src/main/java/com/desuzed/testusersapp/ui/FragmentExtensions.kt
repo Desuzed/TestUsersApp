@@ -1,7 +1,6 @@
 package com.desuzed.testusersapp.ui
 
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator

@@ -18,7 +18,7 @@ class ErrorProviderImpl(private val resources: Resources) : ErrorProvider {
 interface ErrorProvider {
     fun parseCode(code: Int): String
 
-    companion object{
+    companion object {
         const val NETWORK_ERROR = 10
     }
 }
