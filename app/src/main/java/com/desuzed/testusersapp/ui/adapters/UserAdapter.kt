@@ -31,19 +31,17 @@ class UserAdapter(
         holder.bind(current, onItemClickListener)
     }
 
-    class UserViewHolder(binding: UserRecyclerViewItemBinding) :
+    class UserViewHolder(private val binding: UserRecyclerViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val firstNameTextView: TextView = binding.firstNameTextView
-        private val secondNameTextView: TextView = binding.secondNameTextView
-        private val avatarImageView: ImageView = binding.avatarImageView
 
         fun bind(current: User, onItemClickListener: OnItemClickListener) {
-            firstNameTextView.text = current.firstName
-            secondNameTextView.text = current.lastName
+            binding.firstNameTextView.text = current.firstName
+            binding.secondNameTextView.text = current.lastName
+            binding.emailTextView.text = current.email
             Glide
                 .with(itemView.context)
                 .load(current.avatar)
-                .into(avatarImageView)
+                .into(binding.avatarImageView)
             itemView.setOnClickListener {
                 onItemClickListener.onClick(current)
             }

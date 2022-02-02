@@ -10,7 +10,6 @@ import com.desuzed.testusersapp.App
 import com.desuzed.testusersapp.R
 import com.desuzed.testusersapp.databinding.FragmentDetailedInfoBinding
 import com.desuzed.testusersapp.ui.ViewModelFactory
-import com.desuzed.testusersapp.ui.edit.EditUserDialogFragment
 
 class DetailedInfoFragment : Fragment() {
     private lateinit var binding: FragmentDetailedInfoBinding

@@ -8,4 +8,8 @@
     <string name="server_error">Server error</string>
     <string name="network_error">Network error</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="no_users_found">No users found. Please,  try to refresh to fetch data from API.</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
 </resources>

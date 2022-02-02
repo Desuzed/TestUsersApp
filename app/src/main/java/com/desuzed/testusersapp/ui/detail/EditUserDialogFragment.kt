@@ -1,4 +1,4 @@
-package com.desuzed.testusersapp.ui.edit
+package com.desuzed.testusersapp.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import com.desuzed.testusersapp.App
 import com.desuzed.testusersapp.data.model.User
 import com.desuzed.testusersapp.databinding.FragmentEditUserBinding
 import com.desuzed.testusersapp.ui.ViewModelFactory
-import com.desuzed.testusersapp.ui.detail.DetailInfoViewModel
 
 class EditUserDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentEditUserBinding

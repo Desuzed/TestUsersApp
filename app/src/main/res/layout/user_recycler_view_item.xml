@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:backgroundTint="#706D6D"
+    android:layout_margin="@dimen/small_margin"
     app:cardCornerRadius="@dimen/corner_radius_8"
+    android:backgroundTint="?attr/bg_primary"
     >
 
 
@@ -22,6 +22,7 @@
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
             android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/roundedCorners"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/avatar_example"
@@ -32,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_main"
-            android:maxLines="1"
+            style="@style/TextViewStyle"
             app:layout_constraintStart_toEndOf="@id/avatarImageView"
             app:layout_constraintTop_toTopOf="@id/avatarImageView"
             tools:text="First name" />
@@ -40,12 +41,24 @@
         <TextView
             android:id="@+id/secondNameTextView"
             android:layout_width="0dp"
-            android:maxLines="1"
-            android:layout_marginTop="@dimen/padding_main"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_main"
+            style="@style/TextViewStyle"
             app:layout_constraintStart_toStartOf="@id/firstNameTextView"
             app:layout_constraintTop_toBottomOf="@id/firstNameTextView"
             tools:text="Second name" />
+
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/TextViewStyle.SmallItalic"
+            android:layout_marginTop="@dimen/padding_main"
+            app:layout_constraintStart_toStartOf="@id/secondNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/secondNameTextView"
+            tools:text="mamaMia@gmail.com" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

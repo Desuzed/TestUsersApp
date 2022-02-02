@@ -45,14 +45,29 @@ class UsersFragment : Fragment(), OnItemClickListener {
         collect()
     }
 
+    private fun toggleVisibility(state: Boolean) {
+        if (state) {
+            binding.usersRecyclerView.visibility = View.VISIBLE
+            binding.noUsersTextView.visibility = View.GONE
+        } else {
+            binding.usersRecyclerView.visibility = View.GONE
+            binding.noUsersTextView.visibility = View.VISIBLE
+        }
+    }
+
     private fun collect() {
         lifecycleScope.launchWhenStarted {
             usersViewModel.usersStateFlow.collect {
-                userAdapter.submitList(it)
+                if (it.isEmpty()) {
+                    toggleVisibility(false)
+                } else {
+                    toggleVisibility(true)
+                    userAdapter.submitList(it)
+                }
             }
         }
         lifecycleScope.launchWhenStarted {
-            usersViewModel.errorStateFlow.collect{
+            usersViewModel.errorStateFlow.collect {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
